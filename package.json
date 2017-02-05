@@ -1,0 +1,29 @@
+{
+  "name": "ngreports",
+  "version": "1.0.0",
+  "description": "Angular 1 Reporting google and dashboards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arameshraju/ngReports.git"
+  },
+  "keywords": [
+    "Angularjs",
+    "angular",
+    "1"
+  ],
+  "author": "Ramesh.Raju.Alluri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arameshraju/ngReports/issues"
+  },
+  "homepage": "https://github.com/arameshraju/ngReports#readme",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.1"
+  }
+}
