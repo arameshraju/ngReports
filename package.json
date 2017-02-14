@@ -23,6 +23,7 @@
   "homepage": "https://github.com/arameshraju/ngReports#readme",
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-chart.js": "^1.1.1",
     "bootstrap": "^3.3.7",
     "express": "^4.14.1"
   }

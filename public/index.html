@@ -2,7 +2,9 @@
 <html ng-app="app">
 <head>
 <title>NgReports : Reports & Dashboard</title>
-<script src="/node_modules/angular/angular.min.js"></script>    
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 <script src="js/app.js"></script>
     <script src="js/service.js"></script>
     <script src="js/ctrl.js"></script>
@@ -10,11 +12,35 @@
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css.map">  
 </head>
 <body ng-controller='appCtrl'>
+<div class="container">  
 <h1>ngReports </h1>
     <br/>
     <button class="btn btn-info" ng-click="btnGet()">Get</button>
     <button class="btn btn-info" ng-click="btnUpdate()">update</button>
         
+    <h2>Charts</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <canvas id="pie" class="chart chart-pie"
+                        chart-data="data" chart-labels="labels" chart-options="options">
+            </canvas> 
+
+        </div>
+        <div class="col-md-4">
+<canvas id="base" class="chart-bar"
+  chart-data="lcdata" chart-labels="lclabels" chart-colors="lccolors"
+  chart-dataset-override="datasetOverride" >
+</canvas> 
+
+        </div>
+        
+        <div class="col-md-4">
+            <canvas id="bar" class="chart chart-bar"
+                        chart-data="bdata" chart-labels="blabels" chart-series="series">
+            </canvas>
+
+        </div>
+    </div>
     <h2>Table</h2>
     <table class="table">
     <tr>
@@ -30,6 +56,6 @@
     
     
     <br/>
-
+</div>
 </body>
 </html> 
