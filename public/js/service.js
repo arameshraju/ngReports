@@ -3,22 +3,27 @@ DailyReport.$inject=['$http','$q'];
 
 function DailyReport($http,$q,$scope){
     var report=this;
-    var dailyData=[];
+    report.dailyData=[];
+    report.table={};
     report.getData=function(){
+        console.log("this is data" + report.dailyData);
         return this.dailyData;
     }
         
     report.getRestData=function(){
-        $http.get('data.json').then(successCallback, errorCallback);
+        $http.get('data.json').then(function (response){
+            report.dailyData=response.data;
+            console.log("this is data" + report.dailyData);
+            console.log(response.data);
+            }, function (data){
+                console.log(data);
+            });
+    };
+    report.TableUpdate=function(){
+        
     }
-    function successCallback(response){
-        this.dailyData=response.data;
-//        $apply();
-        console.log(response.data);
-    }
-    function errorCallback(data){
-        console.log(data);
-    }
+    
+    
     
     
 }

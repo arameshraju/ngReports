@@ -10,9 +10,26 @@
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css.map">  
 </head>
 <body ng-controller='appCtrl'>
-<h1>ngReports :{{name}} </h1>
-d :{{dailyData|json}}
+<h1>ngReports </h1>
     <br/>
     <button class="btn btn-info" ng-click="btnGet()">Get</button>
+    <button class="btn btn-info" ng-click="btnUpdate()">update</button>
+        
+    <h2>Table</h2>
+    <table class="table">
+    <tr>
+        <th ng-repeat="c in columns">{{c}}</th>    
+    </tr>
+    <tr  ng-repeat="r in dailyData">
+          <td ng-repeat="c in columns">
+              {{r[c]}}
+            </td>    
+    </tr> 
+       
+    </table>
+    
+    
+    <br/>
+
 </body>
 </html> 
