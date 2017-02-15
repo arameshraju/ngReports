@@ -20,27 +20,37 @@
         
     <h2>Charts</h2>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <canvas id="pie" class="chart chart-pie"
                         chart-data="data" chart-labels="labels" chart-options="options">
             </canvas> 
 
         </div>
-        <div class="col-md-4">
-<canvas id="base" class="chart-bar"
-  chart-data="lcdata" chart-labels="lclabels" chart-colors="lccolors"
-  chart-dataset-override="datasetOverride" >
-</canvas> 
-
-        </div>
-        
-        <div class="col-md-4">
-            <canvas id="bar" class="chart chart-bar"
-                        chart-data="bdata" chart-labels="blabels" chart-series="series">
-            </canvas>
-
+        <div class="col-md-6">
+            <canvas id="base" class="chart-bar"
+              chart-data="lcdata" chart-labels="lclabels" chart-colors="lccolors"
+              chart-dataset-override="datasetOverride" >
+            </canvas> 
         </div>
     </div>
+         <div class="row">
+    
+        
+        <div class="col-md-6">
+            <canvas id="base" class="chart-bar"
+              chart-data="dateChart.data" chart-labels="dateChart.labels" chart-colors="lccolors"
+              chart-dataset-override="datasetOverride" >
+            </canvas> 
+           
+        </div>
+        <div class="col-md-6">
+            <canvas id="pie" class="chart chart-pie"
+                        chart-data="pieProdChart.data" chart-labels="pieProdChart.labels" chart-options="options">
+            </canvas> 
+
+        </div>        
+    </div>
+
     <h2>Table</h2>
     <table class="table">
     <tr>
