@@ -21,12 +21,14 @@
     <h2>Charts</h2>
     <div class="row">
         <div class="col-md-6">
+            <h2>Raw Consumption</h2>
             <canvas id="pie" class="chart chart-pie"
                         chart-data="data" chart-labels="labels" chart-options="options">
             </canvas> 
 
         </div>
         <div class="col-md-6">
+            <h2>Target vs Actuals</h2>
             <canvas id="base" class="chart-bar"
               chart-data="lcdata" chart-labels="lclabels" chart-colors="lccolors"
               chart-dataset-override="datasetOverride" >
@@ -37,6 +39,7 @@
     
         
         <div class="col-md-6">
+            <h2>Production Trend</h2>
             <canvas id="base" class="chart-bar"
               chart-data="dateChart.data" chart-labels="dateChart.labels" chart-colors="lccolors"
               chart-dataset-override="datasetOverride" >
@@ -44,21 +47,76 @@
            
         </div>
         <div class="col-md-6">
+            <h2>Production output</h2>
             <canvas id="pie" class="chart chart-pie"
                         chart-data="pieProdChart.data" chart-labels="pieProdChart.labels" chart-options="options">
             </canvas> 
 
         </div>        
     </div>
-
-    <h2>Table</h2>
-    <table class="table">
+    <div class="row">
+        <div class="col-sm-6">
+           <h2>Raw Consumption</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Item</td>
+                    <td align="right">Target</td>
+                    <td align="right">Actual</td>
+                    <td align="right">Diff</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(c,v) in Consoldata">
+                        <td>{{c}}</td>
+                        <td align="right">{{v[1] | number:2}}</td>
+                        <td align="right">{{v[0] | number:2}}</td>
+                        <td align="right">{{v[2] | number:2 }}</td>
+                        
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+         <div class="col-sm-6">
+             <h2>Production output</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Item</td>
+                    <td align="right">Total Consuption</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(c,v) in batchData">
+                        <td>{{c}}</td>
+                        <td align="right">{{v | number:2}}</td>
+                        
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>   
+    </div>
+    <div class="row">
+    <h2>Detailed Report</h2>
+    <table class="table" border="1px">
     <tr>
         <th ng-repeat="c in columns">{{c}}</th>    
     </tr>
     <tr  ng-repeat="r in dailyData">
-          <td ng-repeat="c in columns">
-              {{r[c]}}
+          <td ng-repeat="c in columns"              >
+              <span ng-if="r[c].length!=2" >{{r[c]}}</span>
+              <span ng-if="r[c].length==2" >
+                  <table class="table">
+                      <tr>
+                          <td>{{r[c][0] |number:0}} </td>
+                          <td>{{r[c][1]|number:0}} </td>
+                      </tr>
+                  </table>
+                  
+              </span>
+              
             </td>    
     </tr> 
        
@@ -66,6 +124,7 @@
     
     
     <br/>
+</div>
 </div>
 </body>
 </html> 
