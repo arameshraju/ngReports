@@ -32,6 +32,15 @@ function AppCtrl($scope,DailReport){
         console.log('GetData');
         DailReport.getRestData();
     };
+$scope.btnGetWeek=function(){
+        console.log('GetData');
+        DailReport.getRestDataWeek();
+    };
+$scope.btnGetMonth=function(){
+        console.log('GetData');
+        DailReport.getRestDataMonth();
+    };
+    
     $scope.btnUpdate=function(){
         $scope.columns={};
         $scope.Consoldata={};

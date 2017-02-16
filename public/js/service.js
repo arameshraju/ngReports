@@ -19,6 +19,24 @@ function DailyReport($http,$q,$scope){
                 console.log(data);
             });
     };
+    report.getRestDataWeek=function(){
+        $http.get('data1.json').then(function (response){
+            report.dailyData=response.data;
+            console.log("this is data" + report.dailyData);
+            console.log(response.data);
+            }, function (data){
+                console.log(data);
+            });
+    };
+    report.getRestDataMonth=function(){
+        $http.get('data2.json').then(function (response){
+            report.dailyData=response.data;
+            console.log("this is data" + report.dailyData);
+            console.log(response.data);
+            }, function (data){
+                console.log(data);
+            });
+    };
     report.TableUpdate=function(){
         
     }

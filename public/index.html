@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-<title>NgReports : Reports & Dashboard</title>
+<title>Production : Reports & Dashboard</title>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/chart.js/dist/Chart.min.js"></script>
 <script src="/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
@@ -13,10 +13,12 @@
 </head>
 <body ng-controller='appCtrl'>
 <div class="container">  
-<h1>ngReports </h1>
+<h1>Production </h1>
     <br/>
-    <button class="btn btn-info" ng-click="btnGet()">Get</button>
-    <button class="btn btn-info" ng-click="btnUpdate()">update</button>
+    <button class="btn btn-info" ng-click="btnGet()">Import Day Data</button>
+    <button class="btn btn-info" ng-click="btnGetWeek()">Import Week Data</button>
+    <button class="btn btn-info" ng-click="btnGetMonth()">Import Month Data</button>
+    <button class="btn btn-info" ng-click="btnUpdate()">View</button>
         
     <h2>Charts</h2>
     <div class="row">
