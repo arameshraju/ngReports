@@ -10,7 +10,7 @@ function AppCtrl($scope,DailReport){
     $scope.barChart={labels:[],data:[]};
     $scope.labels =$scope.pieChart.labels;// ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
    $scope.data = $scope.pieChart.data;// [300, 500, 100];
-    
+//    $scope.master={strdate:new Date(),enddate:new Date().format('dd-mm-yyyy')};
     // Chart 
     $scope.lccolors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
