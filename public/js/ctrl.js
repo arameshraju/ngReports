@@ -1,7 +1,24 @@
 app.controller('appCtrl',AppCtrl);
+app.controller('QAppCtrl',QAppCtrl);
+
+QAppCtrl.$inject=['$scope','feedDataListService'];
+function QAppCtrl($scope,feedDataListService){
+    $scope.master={strdate:'01-02-2017',enddate:'18-02-2017'};
+    $scope.itmes=feedDataListService.getItems();
+    $scope.addActin=function(){
+        console.log("name :"+ $scope.name +" qty: " + $scope.qty);
+        
+        feedDataListService.addItem($scope.name,$scope.qty);
+    }
+}
+
+
 
 AppCtrl.$inject=['$scope','DailReport'];
-function AppCtrl($scope,DailReport){
+function AppCtrl( $scope,DailReport){
+
+    
+    
     //Chart Data
     $scope.pieChart={labels:[],data:[]};
     $scope.pieProdChart={labels:[],data:[]};

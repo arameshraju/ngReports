@@ -1,0 +1,11 @@
+body{
+/*    background-color: cornsilk;*/
+}
+.date-selection{
+    min-height: 300px;
+    vertical-align: middle;
+    text-align: center;
+    border : 2px solid #e2dcdc;
+    border-radius: 30px;
+    
+}
