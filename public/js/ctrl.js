@@ -7,8 +7,7 @@ function QAppCtrl($scope,feedDataListService){
     $scope.itmes=feedDataListService.getItems();
     $scope.addActin=function(){
         console.log("name :"+ $scope.name +" qty: " + $scope.qty);
-        
-        feedDataListService.addItem($scope.name,$scope.qty);
+        feedDataListService.importData($scope.name,$scope.qty);
     }
 }
 

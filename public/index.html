@@ -14,13 +14,16 @@
 <link rel="stylesheet" href="main.css">    
 </head>
 <body ng-controller='QAppCtrl'>
+<!--
 <div>
     <h1>Test Data Area</h1>
     name :<input type="text" ng-model="name"/> 
     Qty :<input type="text" ng-model="qty"/> 
     <button ng-click="addActin()">Add</button> <br/>
-    {{itmes}}
+
+    
 </div>    
+-->
 <div class="container">  
 <h1>Production </h1>
 
@@ -38,15 +41,17 @@
 <!--  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3">-->
     <baodate  ng-model="master.enddate" is-Check-Date="1"></baodate>
 </div> 
-       <button class="btn btn-info">Get</button>
+       <button class="btn btn-info" ng-click="addActin()">Get</button>
     </form>
+<!--
      <button class="btn btn-info" ng-click="btnGet()">Import 01-02-2017</button>
     <button class="btn btn-info" ng-click="btnGetWeek()">Import 02-02-2017</button>
     <button class="btn btn-info" ng-click="btnGetMonth()">Import 03-02-2017</button>
-    <button class="btn btn-info" ng-click="btnUpdate()">View</button>
+    <button class="btn btn-info" ng-click="addActin()">View</button>
+-->
 </div>    
     {{test|json}}
-<div ng-show="Dash">
+<div ng-show="itmes.r1">
 
    
     <div class="row">

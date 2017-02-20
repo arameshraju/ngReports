@@ -4,20 +4,30 @@ app.service('feedDataListService',FeedDataListService);
 FeedDataListService.$inject=['$q','feedDataService'];
 function FeedDataListService($q,feedDataService){
 var service=this;
-     var items = [];
+     var feedData = {};
     
 
-    service.addItem = function (name, quantity) {
-    var namePromise = feedDataService.checkName(name);
-    var quantityPromise = feedDataService.checkQuantity(quantity);
-
-    $q.all([namePromise, quantityPromise]).
+    service.importData = function (name, quantity) {
+    var r1Promise = feedDataService.importR1Data('fd','td');
+    var r2Promise = feedDataService.importR2Data('fd','td');
+    var r3Promise = feedDataService.importR3Data('fd','td');
+    var r4Promise = feedDataService.importR4Data('fd','td');
+    $q.all([r1Promise, r2Promise,r3Promise,r4Promise]).
     then(function (response) {
-      var item = {
-        name: name,
-        quantity: quantity
-      };
-      items.push(item);
+        console.log('Data :' + response);
+//      var item = {
+//        response.key:
+//        response.value
+//      };
+        angular.forEach(response,function(val){
+            if(val.r1 )feedData.r1=val.r1;
+            if(val.r2 )feedData.r2=val.r2;
+            if(val.r3 )feedData.r3=val.r3;
+            if(val.r4 )feedData.r4=val.r4;
+           
+        });
+            console.log(feedData);
+      
     })
     .catch(function (errorResponse) {
       console.log(errorResponse.message);
@@ -25,61 +35,70 @@ var service=this;
   };
 
   service.removeItem = function (itemIndex) {
-    items.splice(itemIndex, 1);
+    feedData.splice(itemIndex, 1);
   };
 
   service.getItems = function () {
-    return items;
+    return feedData;
+};
+service.setItemsEmpty = function () {
+    console.log("Empty");
+    feedData={};
 };
 };
         
     
 
 
-FeedDataService.$inject = ['$q', '$timeout'];
-function FeedDataService($q,$timeout){
+FeedDataService.$inject = ['$q', '$timeout','$http'];
+function FeedDataService($q,$timeout,$http){
   var service=this;
-    service.checkName = function (name) {
+    service.importR1Data = function (fromDate,toDate) {
     var deferred = $q.defer();
+    var feedData = {};
+    $http.get('data.json').then(function (response){
+             deferred.resolve({r1:response.data});
+            }, function (data){
+              deferred.reject(data);
+    });
 
-    var result = {
-      message: ""
-    };
+    return deferred.promise;
+  };
+    service.importR2Data = function (fromDate,toDate) {
+    var deferred = $q.defer();
+    var feedData = [];
+    $http.get('data1.json').then(function (response){
+                deferred.resolve({r2:response.data});
+            }, function (data){
+              deferred.reject(data);
+    });
 
-    $timeout(function () {
-      // Check for cookies
-      if (name.toLowerCase().indexOf('ramesh') === -1) {
-        deferred.resolve(result)
-      }
-      else {
-        result.message = "Ramesh is not accepted";
-        deferred.reject(result);
-      }
-    }, 3000);
+    return deferred.promise;
+  };
+    service.importR3Data = function (fromDate,toDate) {
+    var deferred = $q.defer();
+    var feedData = [];
+    $http.get('data2.json').then(function (response){
+               deferred.resolve({r3:response.data});
+            }, function (data){
+              deferred.reject(data);
+    });
+
+    return deferred.promise;
+  };
+    service.importR4Data = function (fromDate,toDate) {
+    var deferred = $q.defer();
+    var feedData = [];
+    $http.get('data2.json').then(function (response){
+             deferred.resolve({r4:response.data});
+            }, function (data){
+              deferred.reject(data);
+    });
 
     return deferred.promise;
   };
 
 
-  service.checkQuantity = function (quantity) {
-    var deferred = $q.defer();
-    var result = {
-      message: ""
-    };
-
-    $timeout(function () {
-      // Check for too many boxes
-      if (quantity < 6) {
-        deferred.resolve(result);
-      }
-      else {
-        result.message = "Quantity should be less";
-        deferred.reject(result);
-      }
-    }, 1000);
-
-    return deferred.promise;
-};
     
 };
 
