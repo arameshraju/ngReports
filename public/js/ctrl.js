@@ -1,17 +1,30 @@
 app.controller('appCtrl',AppCtrl);
 app.controller('QAppCtrl',QAppCtrl);
+app.controller('consolidateCtrl',ConsolidateCtrl);
 
-QAppCtrl.$inject=['$scope','feedDataListService'];
+QAppCtrl.$inject=['$scope','feedDataListService','$timeout'];
 function QAppCtrl($scope,feedDataListService){
     $scope.master={strdate:'01-02-2017',enddate:'18-02-2017'};
     $scope.itmes=feedDataListService.getItems();
+    $scope.prodItmes=feedDataListService.getProdItems();
+  
     $scope.addActin=function(){
         console.log("name :"+ $scope.name +" qty: " + $scope.qty);
+//        $scope.itmes={};
+        feedDataListService.setItemsEmpty();
         feedDataListService.importData($scope.name,$scope.qty);
+        
+           $scope.itmes=feedDataListService.getItems();
+//           $scope.consolidate=feedDataListService.getConsolidatedReport();
     }
 }
 
-
+ConsolidateCtrl.$inject=['$scope','feedDataListService','$timeout'];
+function ConsolidateCtrl($scope,feedDataListService){
+     $scope.consolidate=feedDataListService.getR1Data();
+    feedDataListService.getConsolidatedReport();
+    
+}
 
 AppCtrl.$inject=['$scope','DailReport'];
 function AppCtrl( $scope,DailReport){
