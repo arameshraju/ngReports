@@ -15,9 +15,14 @@
 </head>
 <body ng-controller='QAppCtrl'>
 <div class="container">  
-<h1>Production </h1>
+    <div class="row">
+        <div class="col-sm-4"> <h1>Production </h1></div>
+        
+        <div class="col-sm-4 pull-right"> <h1 class="text-right"> <a href="#" ng-click="updateShowHideDis('date')"><span class="glyphicon glyphicon-edit"></span></a>  </h1></div>
+    </div>
 
-<div class="row date-selection">
+
+<div class="row date-selection" ng-show="showHides.dateDiv">
     
 <h2>Select Date Range for Production Reports</h2>
    <form class="form-inline"> 
@@ -35,10 +40,20 @@
     </form>
 </div>    
   
-
-
-        <h1>Reports</h1>
-        <div class="row">
+<div ng-show="showHides.consolDiv">
+<div class="row">
+        <h2>Consolidated  Reports ({{unitName}})</h2>
+<div class="col-sm-12">
+    <ul class="nav navbar-nav"> 
+        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r1')">R1 Feed</a> </li> 
+        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r2')">R2 Feed</a> </li> 
+        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r3')">R3 Feed</a> </li> 
+        <li>  <a href="" class="menuActive.r1"  ng-click="updateUnit('r4')">R4 Feed</a> </li> 
+    </ul>
+        
+</div>    
+</div>
+        <div class="row" >
 <!--         xxxxx  {{consolidata |json}}-->
       <div class="col-md-6">
             <h2>Product output</h2>
@@ -74,55 +89,44 @@
        
          
         </div>
+    
+    <div class="row">
+        <div class="col-sm-2">
+            <h4> Products  </h4>
+            <ul>
+                <li ng-repeat="v in consolidata.prod.lable"><a ng-click="filterData(unitName,'prod',v)" > {{v}} </a> </li>
+            </ul>
+        </div>
+        <div class="col-sm-3">
+            <h4> Feeds  </h4>
+            <ul>
+                <li ng-repeat="v in consolidata.feed.lable"><a ng-click="filterData(unitName,'feed',v)" > {{v}} </a> </li>
+            </ul>
+        </div>
+        <div class="col-sm-3">
+            <h4> Feeds  </h4>
+            <ul>
+                <li ng-repeat="v in consolidata.stage.lable"><a ng-click="filterData(unitName,'stage',v)" > {{v}} </a> </li>
+            </ul>
+        </div>
+        <div class="col-sm-3">
+            <h4> Feeds  </h4>
+            <ul>
+                <li ng-repeat="v in consolidata.barch.lable"><a ng-click="filterData(unitName,'batch',v)" > {{v}} </a> </li>
+            </ul>
+        </div>
+        
+    </div>
+    
+        </div><!--    end Conolidated dash-->
 
 
     <div ng-show="itmes.r1">
 
    
     <div class="row">
-<!--
-    <div class="col-sm-2">
-        from Date :<baodate  ng-model="master.strdate" is-Check-Date="1"></baodate>
-    </div>
-    <div class="col-sm-2">
-        from Date :<baodate  ng-model="master.enddate" is-Check-Date="1"></baodate>
-    </div>
-    <div class="col-sm-2">
-        Shift:
-        <select class="form-control">
-            <option>All</option>
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-        </select>
-    </div>
-    <div class="col-sm-2">
-        Batch:
-        <select class="form-control">
-            <option>All</option>
-            <option>Axxx</option>
-            <option>Byyy</option>
-            <option>Czzz</option>
-        </select>
-            
-    </div>   
-    </div>
--->
-<!--
-    <div class="row">
-    <div class="col-sm-2">
-        Modify the Date
-        <button class="btn btn-info" ng-click="btnGet()">Import Day Data</button>
-    </div>    
-    <div class="col-sm-2">
-        
-         <button class="btn btn-info" ng-click="btnUpdate()">View</button>
-    </div>    
-        
-    </div>
--->
-          
-    {{master.strdate}}
+
+    <div ng-show="showHides.detailDiv">
     <h2>Charts</h2>
     <div class="row">
         <div class="col-md-6">
@@ -230,7 +234,7 @@
     
     <br/>
 </div>
-        
+     </div>       
 
 </div>
 </div>    

@@ -4,10 +4,13 @@ app.controller('consolidateCtrl',ConsolidateCtrl);
 
 QAppCtrl.$inject=['$scope','feedDataListService','$timeout'];
 function QAppCtrl($scope,feedDataListService){
+    $scope.unitName="r1";
     $scope.master={strdate:'01-02-2017',enddate:'18-02-2017'};
     $scope.itmes=feedDataListService.getItems();
     $scope.prodItmes=feedDataListService.getProdItems();
     $scope.consolidata=feedDataListService.getConsolidatedReport();
+//    $scope.showHides={dateDiv:true, consolDiv:false };
+
     $scope.addActin=function(){
         console.log("name :"+ $scope.name +" qty: " + $scope.qty);
         feedDataListService.setItemsEmpty();
@@ -19,8 +22,56 @@ function QAppCtrl($scope,feedDataListService){
       $scope.$on('consolidate:updated', function(event,data) {
           console.log('on :  ' + event + " data " + angular.toJson(data));
            $scope.consolidata=data;
+          $scope.updateShowHideDis('consol');
    });
    
+$scope.updateShowHideDis=function(divName){
+    switch(divName) {
+    case 'date':
+         $scope.showHides={dateDiv:true, consolDiv:false,detailDiv:false };
+        break;
+    case 'consol':
+         $scope.showHides={dateDiv:false, consolDiv:true, detailDiv:false};
+                break;
+    case 'details':
+         $scope.showHides={dateDiv:false, consolDiv:false,detailDiv:true };
+
+    break;
+    default:
+        $scope.showHides={dateDiv:true, consolDiv:false, detailDiv:false };
+    }  
+};
+$scope.updateUnit   =function(unit){
+    switch(unit) {
+    case 'r1':
+            $scope.menuActive={r1:'Active',r2:'',r3:'',r4:'',};
+            feedDataListService.updateConsolidationReport('r1');
+            $scope.unitName="r1";
+        break;
+    case 'r2':
+         $scope.menuActive={r1:'',r2:'',r3:'Active',r4:'',};
+            feedDataListService.updateConsolidationReport('r2');
+            $scope.unitName="r2";
+                break;
+    case 'r3':
+         $scope.menuActive={r1:'Active',r2:'',r3:'Active',r4:'',};
+            feedDataListService.updateConsolidationReport('r3');
+            $scope.unitName="r3";
+    break;
+    case 'r4':
+         $scope.menuActive={r1:'',r2:'',r3:'',r4:'Active',};
+            feedDataListService.updateConsolidationReport('r4');
+            $scope.unitName="r4";
+    break;
+    default:
+            $scope.menuActive={r1:'Active',r2:'',r3:'',r4:'',};
+    }  
+} ;
+    $scope.filterData=function(u,s,data){
+        console.log(u + " : "+ s +" : "+ data);
+    };
+    $scope.updateShowHideDis('');
+    $scope.updateUnit('');
 }
 
 

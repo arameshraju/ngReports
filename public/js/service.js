@@ -34,7 +34,7 @@ var service=this;
         if(feedData.r2) service.updateProductName('r2',feedData.r2,feedData.prod);
         if(feedData.r3) service.updateProductName('r3',feedData.r3,feedData.prod);
         if(feedData.r4) service.updateProductName('r4',feedData.r5,feedData.prod);
-        service.updateConsolidationReport();
+        service.updateConsolidationReport('r1');
         
             console.log(feedData);
       
@@ -69,13 +69,13 @@ service.setItemsEmpty = function () {
     feedData={};
 };
 
-service.updateConsolidationReport=function(){
+service.updateConsolidationReport=function(u){
     var finalData={};
     var batchChart={};
     var feedChart={};
     var prodChart={};
     var stageChart={};
-     angular.forEach(FeedProductData.r1,function(row){
+     angular.forEach(FeedProductData[u],function(row){
          var total=0;
            angular.forEach(row,function(val,col){
                if(col =='date' || col =='shift' || col=='batch' || col=='prod' || col=='feed' || col=='stage' ){
@@ -146,7 +146,6 @@ service.updateProductName =function(k,vData,prod )    {
             d.feed='Unknow';
             d.stage='Unknow';
         }
-//        console.log( angular.toJson(d));
         data.push(d);
         
         
