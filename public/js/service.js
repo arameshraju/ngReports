@@ -1,12 +1,12 @@
 app.service('feedDataService',FeedDataService);
 app.service('feedDataListService',FeedDataListService);
 
-FeedDataListService.$inject=['$q','feedDataService','$filter'];
-function FeedDataListService($q,feedDataService,$filter){
+FeedDataListService.$inject=['$q','feedDataService','$filter','$rootScope'];
+function FeedDataListService($q,feedDataService,$filter,$rootScope){
 var service=this;
      var feedData = {};
     var FeedProductData={}
-     var feedConsolidation = [];
+     var feedConsolidation = {};
     
 
     service.importData = function (name, quantity) {
@@ -70,23 +70,71 @@ service.setItemsEmpty = function () {
 };
 
 service.updateConsolidationReport=function(){
+    var finalData={};
+    var batchChart={};
+    var feedChart={};
+    var prodChart={};
+    var stageChart={};
      angular.forEach(FeedProductData.r1,function(row){
-         var total=[];
+         var total=0;
            angular.forEach(row,function(val,col){
-               
-                console.log( '### '+ val);       
-           });
-     });
-};
+               if(col =='date' || col =='shift' || col=='batch' || col=='prod' || col=='feed' || col=='stage' ){
+                   //No action
+               }else{
+                     if(!isNaN(val[0])) total=total+parseInt(val[0]);
+   
+                   
+               }
     
+              
+           });
+         if(batchChart[row['batch']] == undefined){
+                batchChart[row['batch']]=total;
+            }else{
+               batchChart[row['batch']]= parseFloat(batchChart[row['batch']])+parseFloat(total)
+         }
+         if(prodChart[row['prod']] == undefined){
+                prodChart[row['prod']]=total;
+            }else{
+               prodChart[row['prod']]= parseFloat(prodChart[row['prod']])+parseFloat(total)
+         }
+         if(feedChart[row['feed']] == undefined){
+                feedChart[row['feed']]=total;
+            }else{
+               feedChart[row['feed']]= parseFloat(feedChart[row['feed']])+parseFloat(total)
+         }
+         if(stageChart[row['stage']] == undefined){
+                stageChart[row['stage']]=total;
+            }else{
+               stageChart[row['stage']]= parseFloat(stageChart[row['stage']])+parseFloat(total)
+         }
+         
+     });
+    
+        finalData={prod:service.convertAsLabel(prodChart),
+                   feed:service.convertAsLabel(feedChart),stage: service.convertAsLabel(stageChart), barch:service.convertAsLabel(batchChart)};
+    console.log(angular.toJson(finalData));
+    feedConsolidation = finalData;
+    
+    $rootScope.$broadcast('consolidate:updated',feedConsolidation);
+    
+};
+service.convertAsLabel=function(jObj){
+    var i=0;
+    var chartData={lable:[],data:[]};
+  angular.forEach(jObj,function(val,col){
+                   chartData.lable[i]=col; 
+                   chartData.data[i]=val; 
+                    i++;
+                
+            } );  
+    return chartData;
+};    
 
 service.updateProductName =function(k,vData,prod )    {
     var data=[];
     angular.forEach(vData,function(d){
-//        console.log(d.batch.split('-')[0]);
-//        console.log(    d.batch.split('-')[0].substring(1));
         var pdata=$filter('filter')(prod,d.batch.split('-')[0].substring(1));
-//        console.log( pdata.length);
         if(pdata.length>0){
              d.prod=pdata[0].prod;
              d.feed=pdata[0].feed;

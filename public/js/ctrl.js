@@ -7,17 +7,22 @@ function QAppCtrl($scope,feedDataListService){
     $scope.master={strdate:'01-02-2017',enddate:'18-02-2017'};
     $scope.itmes=feedDataListService.getItems();
     $scope.prodItmes=feedDataListService.getProdItems();
-  
+    $scope.consolidata=feedDataListService.getConsolidatedReport();
     $scope.addActin=function(){
         console.log("name :"+ $scope.name +" qty: " + $scope.qty);
-//        $scope.itmes={};
         feedDataListService.setItemsEmpty();
         feedDataListService.importData($scope.name,$scope.qty);
         
            $scope.itmes=feedDataListService.getItems();
-//           $scope.consolidate=feedDataListService.getConsolidatedReport();
-    }
+            $scope.consolidata=feedDataListService.getConsolidatedReport();
+    };
+      $scope.$on('consolidate:updated', function(event,data) {
+          console.log('on :  ' + event + " data " + angular.toJson(data));
+           $scope.consolidata=data;
+   });
+   
 }
+
 
 ConsolidateCtrl.$inject=['$scope','feedDataListService','$timeout'];
 function ConsolidateCtrl($scope,feedDataListService){
@@ -28,9 +33,6 @@ function ConsolidateCtrl($scope,feedDataListService){
 
 AppCtrl.$inject=['$scope','DailReport'];
 function AppCtrl( $scope,DailReport){
-
-    
-    
     //Chart Data
     $scope.pieChart={labels:[],data:[]};
     $scope.pieProdChart={labels:[],data:[]};
