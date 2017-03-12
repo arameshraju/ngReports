@@ -20,7 +20,6 @@ function QAppCtrl($scope,feedDataListService){
             $scope.consolidata=feedDataListService.getConsolidatedReport();
     };
       $scope.$on('consolidate:updated', function(event,data) {
-          console.log('on :  ' + event + " data " + angular.toJson(data));
            $scope.consolidata=data;
           $scope.updateShowHideDis('consol');
    });
@@ -68,7 +67,10 @@ $scope.updateUnit   =function(unit){
     }  
 } ;
     $scope.filterData=function(u,s,data){
-        console.log(u + " : "+ s +" : "+ data);
+       $scope.detailData=feedDataListService.getDetailsReport(u,s,data);
+
+        $scope.updateShowHideDis('details');
+        
     };
     $scope.updateShowHideDis('');
     $scope.updateUnit('');

@@ -119,12 +119,67 @@ service.updateConsolidationReport=function(u){
     $rootScope.$broadcast('consolidate:updated',feedConsolidation);
     
 };
-service.convertAsLabel=function(jObj){
+    
+
+service.getDetailsReport =function(u,filterParm,value){
+     console.log(u + " : "+ filterParm +" : "+ value);
+        var data=FeedProductData[u];
+        var report={columns:{},Consoldata:{},batchData:{},dateData:{},data:data,rawChart:{},dateChart:{},ProdChart:{},rawDiffChart:{}};
+  angular.forEach(data,function(row){
+            var total=0;
+             angular.forEach(row,function(val,col){
+                 report.columns[col]=col;
+                    if(col == 'date' || col=='shift' || col=='batch' ||  col=='prod' || col=='feed' || col=='stage' || val[1]==0 || val[0]==0 ){
+                        console.log("Not Added");
+                    }else{
+                        
+                        if(!isNaN(val[0])){
+                            total+=parseFloat(val[0]);
+                                if(report.Consoldata[col] == undefined){
+                                    report.Consoldata[col]= [parseFloat(val[0]),parseFloat(val[1]), parseFloat(val[1])-parseFloat(val[0])];
+                                }else{
+                                    report.Consoldata[col]= [parseFloat(report.Consoldata[col][0])+ parseFloat(val[0]), parseFloat(report.Consoldata[col][1])+ parseFloat(val[1]), parseFloat(report.Consoldata[col][2])+(parseFloat(val[1])-parseFloat(val[0]))];
+                                }
+                        }
+                    }
+                
+                 
+             });
+             if(report.batchData[row['batch']] == undefined){
+                report.batchData[row['batch']]=total;
+            }else{
+                report.batchData[row['batch']]= parseFloat(report.batchData[row['batch']])+parseFloat(total)
+            }
+            if(report.dateData[row['date']] == undefined){
+                report.dateData[row['date']]=total;
+            }else{
+                report.dateData[row['date']]= parseFloat(report.dateData[row['date']])+parseFloat(total)
+            }
+        });   
+            report.rawChart=service.convertAsLabel(report.Consoldata,'0');
+            report.rawDiffChart=service.convertAsLabel(report.Consoldata,'2');
+            report.dateChart=service.convertAsLabel(report.dateData);
+            report.ProdChart=service.convertAsLabel(report.batchData);
+        
+                 return report;
+
+    
+};
+    
+service.convertAsLabel=function(jObj,param){
     var i=0;
     var chartData={lable:[],data:[]};
   angular.forEach(jObj,function(val,col){
-                   chartData.lable[i]=col; 
-                   chartData.data[i]=val; 
+      
+                   chartData.lable[i]=col;
+                    if (typeof param === 'undefined'){
+                        chartData.data[i]=val; 
+                    }else if(param =='0') {
+                        chartData.data[i]=val[0]; 
+                    
+                    }else if(param =='2') {
+                        chartData.data[i]=val[2]; 
+                    }
                     i++;
                 
             } );  
