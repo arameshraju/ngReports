@@ -9,8 +9,9 @@ var service=this;
      var feedConsolidation = {};
     
 
-    service.importData = function (name, quantity) {
-    var r1Promise = feedDataService.importR1Data('fd','td');
+    service.importData = function (fd, td) {
+        
+    var r1Promise = feedDataService.importR1Data('r1',fd,td);
     var r2Promise = feedDataService.importR2Data('fd','td');
     var r3Promise = feedDataService.importR3Data('fd','td');
     var r4Promise = feedDataService.importR4Data('fd','td');
@@ -218,11 +219,21 @@ service.updateProductName =function(k,vData,prod )    {
 FeedDataService.$inject = ['$q', '$timeout','$http'];
 function FeedDataService($q,$timeout,$http){
   var service=this;
-    service.importR1Data = function (fromDate,toDate) {
+    var urlName="data.json";
+//    var urlName="http://localhost/grow/service.php?";
+    
+    service.convertDate= function (dateStr){
+        console.log(dateStr);
+        var d= dateStr.split("-");
+        return d[1]+"/"+d[0]  +"/"+d[2];
+    };
+    service.importR1Data = function (report,fromDate,toDate) {
+        var callUrl=urlName + "report="+report+"&fromDate"+ service.convertDate(fromDate)+"&toDate="+ service.convertDate(toDate)+"&";
     var deferred = $q.defer();
     var feedData = {};
           $timeout(function () {
-    $http.get('data.json').then(function (response){
+              console.log(callUrl);
+    $http.get(callUrl).then(function (response){
              deferred.resolve({r1:response.data});
             }, function (data){
               deferred.reject(data);

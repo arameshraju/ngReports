@@ -12,9 +12,9 @@ function QAppCtrl($scope,feedDataListService){
 //    $scope.showHides={dateDiv:true, consolDiv:false };
 
     $scope.addActin=function(){
-        console.log("name :"+ $scope.name +" qty: " + $scope.qty);
+        console.log("strdate :"+ $scope.master.strdate +" enddate: " + $scope.master.strdate);
         feedDataListService.setItemsEmpty();
-        feedDataListService.importData($scope.name,$scope.qty);
+        feedDataListService.importData($scope.master.strdate,$scope.master.strdate);
         
            $scope.itmes=feedDataListService.getItems();
             $scope.consolidata=feedDataListService.getConsolidatedReport();
