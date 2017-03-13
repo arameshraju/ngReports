@@ -18,7 +18,10 @@
     <div class="row">
         <div class="col-sm-4"> <h1>Production </h1></div>
         
-        <div class="col-sm-4 pull-right"> <h1 class="text-right"> <a href="#" ng-click="updateShowHideDis('date')"><span class="glyphicon glyphicon-edit"></span></a>  </h1></div>
+        <div class="col-sm-4 pull-right"> <h1 class="text-right"> 
+            <a href="#" ng-click="updateShowHideDis('consol')"><span ng-show="showHides.detailDiv" class="glyphicon glyphicon-arrow-left"></span></a>  
+            <a href="#" ng-click="updateShowHideDis('date')"><span class="glyphicon glyphicon-edit"></span></a>  
+            </h1></div>
     </div>
 
 
@@ -164,52 +167,7 @@
 
         </div>         
     </div>
-    
-</div>    
-    
-
-    <div ng-show="itmes.r5">
-
-   
-    <div class="row">
-
-    <div ng-show="showHides.detailDiv">
-    <h2>Charts</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Raw Consumption</h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="data" chart-labels="labels" chart-options="options">
-            </canvas> 
-        </div>
-        <div class="col-md-6">
-            <h2>Target vs Actuals</h2>
-            <canvas id="base" class="chart-bar"
-              chart-data="lcdata" chart-labels="lclabels" chart-colors="lccolors"
-              chart-dataset-override="datasetOverride" >
-            </canvas> 
-        </div>
-    </div>
-         <div class="row">
-    
-        
-        <div class="col-md-6">
-            <h2>Production Trend</h2>
-            <canvas id="base" class="chart-bar"
-              chart-data="dateChart.data" chart-labels="dateChart.labels" chart-colors="lccolors"
-              chart-dataset-override="datasetOverride" >
-            </canvas> 
-           
-        </div>
-        <div class="col-md-6">
-            <h2>Production output</h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="pieProdChart.data" chart-labels="pieProdChart.labels" chart-options="options">
-            </canvas> 
-
-        </div>        
-    </div>
-    <div class="row">
+   <div class="row">
         <div class="col-sm-6">
            <h2>Raw Consumption</h2>
             <table class="table">
@@ -222,7 +180,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(c,v) in Consoldata">
+                    <tr ng-repeat="(c,v) in detailData.Consoldata">
                         <td>{{c}}</td>
                         <td align="right">{{v[1] | number:2}}</td>
                         <td align="right">{{v[0] | number:2}}</td>
@@ -233,7 +191,7 @@
                 </tbody>
             </table>
         </div>
-         <div class="col-sm-6">
+   <div class="col-sm-6">
              <h2>Production output</h2>
             <table class="table">
                 <thead>
@@ -243,7 +201,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(c,v) in batchData">
+                    <tr ng-repeat="(c,v) in detailData.batchData">
                         <td>{{c}}</td>
                         <td align="right">{{v | number:2}}</td>
                         
@@ -251,8 +209,42 @@
                 
                 </tbody>
             </table>
-        </div>   
+        </div>          
     </div>
+    <div class="row">
+    <h2>Detailed Report</h2>
+    <table class="table" border="1px">
+    <tr>
+        <th ng-repeat="c in detailData.columns">{{c}}</th>    
+    </tr>
+    <tr  ng-repeat="r in detailData.data">
+          <td ng-repeat="c in detailData.columns"              >
+              <span ng-if="r[c].length!=2" >{{r[c]}}</span>
+              <span ng-if="r[c].length==2" >
+                  <table class="table">
+                      <tr>
+                          <td>{{r[c][0] |number:0}} </td>
+                          <td>{{r[c][1] |number:0}} </td>
+                      </tr>
+                  </table>
+                  
+              </span>
+              
+            </td>    
+    </tr> 
+       
+    </table>
+    
+    
+    <br/>
+</div>
+</div>    
+    
+
+    <div ng-show="itmes.r5">
+
+   
+   
     <div class="row">
     <h2>Detailed Report</h2>
     <table class="table" border="1px">
