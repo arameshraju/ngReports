@@ -10,11 +10,13 @@ var service=this;
     
 
     service.importData = function (fd, td) {
+
+//    Enable this for prodction
+    var r1Promise = feedDataService.importData('r1',fd,td);
+    var r2Promise = feedDataService.importData('r2',fd,td);
+    var r3Promise = feedDataService.importData('r3',fd,td);
+    var r4Promise = feedDataService.importData('r4',fd,td);
         
-    var r1Promise = feedDataService.importR1Data('r1',fd,td);
-    var r2Promise = feedDataService.importR2Data('fd','td');
-    var r3Promise = feedDataService.importR3Data('fd','td');
-    var r4Promise = feedDataService.importR4Data('fd','td');
     var ProdPromise = feedDataService.importProductData('fd','td');
     $q.all([r1Promise, r2Promise,r3Promise,r4Promise,ProdPromise]).
     then(function (response) {
@@ -124,7 +126,29 @@ service.updateConsolidationReport=function(u){
 
 service.getDetailsReport =function(u,filterParm,value){
      console.log(u + " : "+ filterParm +" : "+ value);
-        var data=FeedProductData[u];
+        var rawdata=FeedProductData[u];
+        var data;
+    //Apply Filter Bsed on selection
+    if(filterParm=="shift"){
+        if(value!="All"){
+           data=$filter('filter')(rawdata,{shift:value});
+        }else{
+            data=rawdata;
+        } 
+    }else if(filterParm=="prod"){
+           data=$filter('filter')(rawdata,{prod:value});
+    }  else if(filterParm=="feed"){
+           data=$filter('filter')(rawdata,{feed:value});
+    }  else if(filterParm=="stage"){
+           data=$filter('filter')(rawdata,{stage:value});
+    }  else if(filterParm=="batch"){
+           data=$filter('filter')(rawdata,{batch :value});
+    }
+    
+    console.log("filterd data "+ angular.toJson(data));
+    
+    
+    
         var report={columns:{},Consoldata:{},batchData:{},dateData:{},data:data,rawChart:{},dateChart:{},ProdChart:{},rawDiffChart:{}};
   angular.forEach(data,function(row){
             var total=0;
@@ -219,62 +243,36 @@ service.updateProductName =function(k,vData,prod )    {
 FeedDataService.$inject = ['$q', '$timeout','$http'];
 function FeedDataService($q,$timeout,$http){
   var service=this;
-    var urlName="data.json";
+    var urlName="data.json?";
+    var timeCont=2000;
+    
 //    var urlName="http://localhost/grow/service.php?";
+//      var timeCont=100;
     
     service.convertDate= function (dateStr){
         console.log(dateStr);
         var d= dateStr.split("-");
         return d[1]+"/"+d[0]  +"/"+d[2];
     };
-    service.importR1Data = function (report,fromDate,toDate) {
+    service.importData = function (report,fromDate,toDate) {
         var callUrl=urlName + "report="+report+"&fromDate"+ service.convertDate(fromDate)+"&toDate="+ service.convertDate(toDate)+"&";
     var deferred = $q.defer();
     var feedData = {};
           $timeout(function () {
               console.log(callUrl);
     $http.get(callUrl).then(function (response){
-             deferred.resolve({r1:response.data});
+                var d={};
+                d[report]=response.data;
+             
+             deferred.resolve(d);
             }, function (data){
               deferred.reject(data);
     });
-          },3000);
+          },timeCont);
 
     return deferred.promise;
   };
-    service.importR2Data = function (fromDate,toDate) {
-    var deferred = $q.defer();
-    var feedData = [];
-    $http.get('data1.json').then(function (response){
-                deferred.resolve({r2:response.data});
-            }, function (data){
-              deferred.reject(data);
-    });
-
-    return deferred.promise;
-  };
-    service.importR3Data = function (fromDate,toDate) {
-    var deferred = $q.defer();
-    var feedData = [];
-    $http.get('data2.json').then(function (response){
-               deferred.resolve({r3:response.data});
-            }, function (data){
-              deferred.reject(data);
-    });
-
-    return deferred.promise;
-  };
-    service.importR4Data = function (fromDate,toDate) {
-    var deferred = $q.defer();
-    var feedData = [];
-    $http.get('data2.json').then(function (response){
-             deferred.resolve({r4:response.data});
-            }, function (data){
-              deferred.reject(data);
-    });
-
-    return deferred.promise;
-  };
+    
     service.importProductData = function (fromDate,toDate) {
     var deferred = $q.defer();
     var feedData = [];
