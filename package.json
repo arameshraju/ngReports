@@ -1,0 +1,28 @@
+{
+  "name": "ngreports",
+  "version": "2.0.0",
+  "description": "Personal chit view Application as mobile first",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arameshraju/ngReports.git"
+  },
+  "author": "Ramesh.Raju.Alluri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arameshraju/ngReports/issues"
+  },
+  "homepage": "https://github.com/arameshraju/ngReports#readme",
+  "dependencies": {
+    "angular": "^1.6.3",
+    "angular-animate": "^1.6.3",
+    "angular-chart.js": "^1.1.1",
+    "angular-touch": "^1.6.3",
+    "angular-ui-bootstrap": "^2.5.0",
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.2"
+  }
+}

@@ -5,6 +5,7 @@
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/chart.js/dist/Chart.min.js"></script>
 <script src="/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 <script src="js/app.js"></script>
     <script src="js/service.js"></script>
     <script src="js/ctrl.js"></script>
@@ -13,268 +14,39 @@
 <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css.map">
 <link rel="stylesheet" href="main.css">    
 </head>
-<body ng-controller='QAppCtrl'>
-<div class="container">  
-    <div class="row">
-        <div class="col-sm-4"> <h1>Production </h1></div>
-        
-        <div class="col-sm-4 pull-right"> <h1 class="text-right"> 
-            <a href="#" ng-click="updateShowHideDis('consol')"><span ng-show="showHides.detailDiv" class="glyphicon glyphicon-arrow-left"></span></a>  
-            <a href="#" ng-click="updateShowHideDis('date')"><span class="glyphicon glyphicon-edit"></span></a>  
-            </h1></div>
+<body ng-controller='appCtrl'>
+
+<div class="main">
+    <div class="sidebar">
+        <div class="container-fluid">
+        <h1>sidebar</h1>
+        </div>    
     </div>
-
-
-<div class="row date-selection" ng-show="showHides.dateDiv">
-    
-<h2>Select Date Range for Production Reports</h2>
-   <form class="form-inline"> 
-        <div class="input-group input-group-sm col-sm-2">
-          <span class="input-group-addon" id="sizing-addon3">from Date</span>
-        <!--  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3">-->
-            <baodate  ng-model="master.strdate" is-Check-Date="1"></baodate>
-        </div>
-        <div class="input-group input-group-sm col-sm-2" >
-          <span class="input-group-addon" id="sizing-addon3">To Date</span>
-        <!--  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3">-->
-            <baodate  ng-model="master.enddate" is-Check-Date="1"></baodate>
-        </div> 
-       <button class="btn btn-info" ng-click="addActin()">Get</button>
-    </form>
-</div>    
-  
-<div ng-show="showHides.consolDiv">
-<div class="row">
-        <h2>Consolidated  Reports ({{unitName}})</h2>
-<div class="col-sm-12">
-    <ul class="nav navbar-nav"> 
-        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r1')">R1 Feed</a> </li> 
-        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r2')">R2 Feed</a> </li> 
-        <li>  <a href="" class="menuActive.r1" ng-click="updateUnit('r3')">R3 Feed</a> </li> 
-        <li>  <a href="" class="menuActive.r1"  ng-click="updateUnit('r4')">R4 Feed</a> </li> 
-    </ul>
-        
-</div>    
-</div>
-        <div class="row" >
-<!--         xxxxx  {{consolidata |json}}-->
-      <div class="col-md-6">
-            <h2>Product output</h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="consolidata.prod.data" chart-labels="consolidata.prod.lable" chart-options="options">
-            </canvas> 
-
-        </div>
-         
-      <div class="col-md-6">
-            <h2>Feed output </h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="consolidata.feed.data" chart-labels="consolidata.feed.lable" chart-options="options">
-            </canvas> 
-
-        </div>
-        <div class="col-md-6">
-            <h2>Stage output </h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="consolidata.stage.data" chart-labels="consolidata.stage.lable" chart-options="options">
-            </canvas> 
-
-        </div>
-            
-        <div class="col-md-6">
-            <h2>Batch output </h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="consolidata.barch.data" chart-labels="consolidata.barch.lable" chart-options="options">
-            </canvas> 
-
-        </div>
-         
-       
-         
-        </div>
-    
-    <div class="row">
-        <div class="col-sm-2">
-            <h4> Shifts  </h4>
-            <ul>
-                <li><a href="" ng-click="filterData(unitName,'shift','All')" > All </a> </li>
-                <li><a href="" ng-click="filterData(unitName,'shift','A')" > Shift A(6am-2pm) </a> </li>
-                <li><a href="" ng-click="filterData(unitName,'shift','B')" > Shift B(2pm-10pm) </a> </li>
-                <li><a href="" ng-click="filterData(unitName,'shift','C')" > Shift C(10pm-6am) </a> </li>
-            </ul>
-        </div>
-        
-        <div class="col-sm-2">
-            <h4> Products  </h4>
-            <ul>
-                <li ng-repeat="v in consolidata.prod.lable"><a href="" ng-click="filterData(unitName,'prod',v)" > {{v}} </a> </li>
-            </ul>
-        </div>
-        <div class="col-sm-3">
-            <h4> Feeds  </h4>
-            <ul>
-                <li ng-repeat="v in consolidata.feed.lable"><a href="" ng-click="filterData(unitName,'feed',v)" > {{v}} </a> </li>
-            </ul>
-        </div>
-        <div class="col-sm-2">
-            <h4> Stage  </h4>
-            <ul>
-                <li ng-repeat="v in consolidata.stage.lable"><a  href="" ng-click="filterData(unitName,'stage',v)" > {{v}} </a> </li>
-            </ul>
-        </div>
-        <div class="col-sm-2">
-            <h4> Feeds  </h4>
-            <ul>
-                <li ng-repeat="v in consolidata.barch.lable"><a href="" ng-click="filterData(unitName,'batch',v)" > {{v}} </a> </li>
-            </ul>
-        </div>
-        
+    <div class="content">
+         <div class="container-fluid">
+        <h1>content</h1>
+             <div class="row">
+                <div class="col-sm-1">div 1</div>
+                <div class="col-sm-1">div 2</div>
+                <div class="col-sm-1">div 3</div>
+                <div class="col-sm-1">div 4</div>
+                <div class="col-sm-1">div 5</div>
+                <div class="col-sm-1">div 6</div>
+                <div class="col-sm-1">div 7</div>
+                <div class="col-sm-1">div 8</div>
+                <div class="col-sm-1">div 9</div>
+                <div class="col-sm-1">div 10</div>
+                <div class="col-sm-1">div 11</div>
+                <div class="col-sm-1">div 12</div>
+             </div>
+        </div>   
     </div>
-    
-        </div><!--    end Conolidated dash-->
-
-<div ng-show="showHides.detailDiv">
-    <div class="row">
-       <div class="col-md-6">
-            <h2>Raw Consumption</h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="detailData.rawChart.data" chart-labels="detailData.rawChart.lable" chart-options="options">
-            </canvas> 
-        </div>
-        <div class="col-md-6">
-            <h2>Target vs Actuals</h2>
-            <canvas id="base" class="chart-bar"
-              chart-data="detailData.rawDiffChart.data" chart-labels="detailData.rawDiffChart.lable" chart-colors="lccolors"
-              chart-dataset-override="datasetOverride" >
-            </canvas> 
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Production Trend</h2>
-            <canvas id="base" class="chart-bar"
-              chart-data="detailData.dateChart.data" chart-labels="detailData.dateChart.lable" chart-colors="lccolors"
-              chart-dataset-override="datasetOverride" >
-            </canvas> 
-           
-        </div>
-        <div class="col-md-6">
-            <h2>Production output</h2>
-            <canvas id="pie" class="chart chart-pie"
-                        chart-data="detailData.ProdChart.data" chart-labels="detailData.ProdChart.lable" chart-options="options">
-            </canvas> 
-
-        </div>         
-    </div>
-   <div class="row">
-        <div class="col-sm-6">
-           <h2>Raw Consumption</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <td>Item</td>
-                    <td align="right">Target</td>
-                    <td align="right">Actual</td>
-                    <td align="right">Diff</td>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(c,v) in detailData.Consoldata">
-                        <td>{{c}}</td>
-                        <td align="right">{{v[1] | number:2}}</td>
-                        <td align="right">{{v[0] | number:2}}</td>
-                        <td align="right">{{v[2] | number:2 }}</td>
-                        
-                    </tr>
-                
-                </tbody>
-            </table>
-        </div>
-   <div class="col-sm-6">
-             <h2>Production output</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <td>Item</td>
-                    <td align="right">Total Consuption</td>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(c,v) in detailData.batchData">
-                        <td>{{c}}</td>
-                        <td align="right">{{v | number:2}}</td>
-                        
-                    </tr>
-                
-                </tbody>
-            </table>
-        </div>          
-    </div>
-    <div class="row">
-    <h2>Detailed Report</h2>
-    <table class="table" border="1px">
-    <tr>
-        <th ng-repeat="c in detailData.columns">{{c}}</th>    
-    </tr>
-    <tr  ng-repeat="r in detailData.data">
-          <td ng-repeat="c in detailData.columns"              >
-              <span ng-if="r[c].length!=2" >{{r[c]}}</span>
-              <span ng-if="r[c].length==2" >
-                  <table class="table">
-                      <tr>
-                          <td>{{r[c][0] |number:0}} </td>
-                          <td>{{r[c][1] |number:0}} </td>
-                      </tr>
-                  </table>
-                  
-              </span>
-              
-            </td>    
-    </tr> 
-       
-    </table>
-    
-    
-    <br/>
-</div>
 </div>    
     
 
-    <div ng-show="itmes.r5">
 
-   
-   
-    <div class="row">
-    <h2>Detailed Report</h2>
-    <table class="table" border="1px">
-    <tr>
-        <th ng-repeat="c in columns">{{c}}</th>    
-    </tr>
-    <tr  ng-repeat="r in dailyData">
-          <td ng-repeat="c in columns"              >
-              <span ng-if="r[c].length!=2" >{{r[c]}}</span>
-              <span ng-if="r[c].length==2" >
-                  <table class="table">
-                      <tr>
-                          <td>{{r[c][0] |number:0}} </td>
-                          <td>{{r[c][1] |number:0}} </td>
-                      </tr>
-                  </table>
-                  
-              </span>
-              
-            </td>    
-    </tr> 
-       
-    </table>
-    
-    
-    <br/>
-</div>
-     </div>       
 
-</div>
-</div>    
-    </body>
+
+
+</body>
 </html> 
