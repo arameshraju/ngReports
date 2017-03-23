@@ -51,3 +51,24 @@ html, body, .main {
 }
 */
 
+.side-menu li,.side-menu li a{
+    line-height: 2em;
+    background-color: blue;
+    margin: 3px;
+    border-radius: 5px;
+    list-style: none;
+    color: white;
+}
+.side-menu li:hover, .side-menu li a:hover{
+    line-height: 2em;
+    background-color: green;
+    margin: 3px;
+    border-radius: 5px;
+    list-style: none;
+    color: white;
+}
+.navbar-right{
+ margin-right: 15px; 
+ margin-top: 4px;
+ 
+}
